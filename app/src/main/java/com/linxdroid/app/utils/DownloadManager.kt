@@ -7,6 +7,8 @@ import okhttp3.Request
 import timber.log.Timber
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 
 data class DownloadResult(
     val inputStream: InputStream,
@@ -14,7 +16,8 @@ data class DownloadResult(
     val isXz: Boolean
 )
 
-class DownloadManager {
+@Singleton
+class DownloadManager @Inject constructor() {
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)

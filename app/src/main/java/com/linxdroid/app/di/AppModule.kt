@@ -15,25 +15,5 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Provides
-    @Singleton
-    fun provideRootFSManager(@ApplicationContext context: Context): RootFSManager =
-        RootFSManager(context)
-
-    @Provides
-    @Singleton
-    fun providePRootManager(
-        @ApplicationContext context: Context,
-        rootFSManager: RootFSManager
-    ): PRootManager = PRootManager(context, rootFSManager)
-
-    @Provides
-    @Singleton
-    fun provideDownloadManager(): DownloadManager = DownloadManager()
-
-    @Provides
-    @Singleton
-    fun providePreferencesManager(@ApplicationContext context: Context): PreferencesManager =
-        PreferencesManager(context)
+    // All dependencies are now provided via @Inject constructor in their respective classes.
 }

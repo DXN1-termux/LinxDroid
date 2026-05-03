@@ -10,8 +10,14 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import javax.inject.Inject
+import javax.inject.Singleton
+import dagger.hilt.android.qualifiers.ApplicationContext
 
-class RootFSManager(private val context: Context) {
+@Singleton
+class RootFSManager @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
     private val rootfsDir: File get() = File(context.filesDir, "linux_rootfs")
 
