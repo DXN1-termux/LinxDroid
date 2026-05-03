@@ -1,5 +1,6 @@
 package com.linxdroid.app.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,7 +14,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,9 +36,9 @@ fun SettingsScreen(
     onSaveCustomArgs: (String) -> Unit
 ) {
     var showUninstallDialog by remember { mutableStateOf(false) }
-    var portInput by remember { mutableStateOf(vncPort.toString()) }
+    var portInput    by remember { mutableStateOf(vncPort.toString()) }
     var displayInput by remember { mutableStateOf(vncDisplay.toString()) }
-    var argsInput by remember { mutableStateOf(customArgs) }
+    var argsInput    by remember { mutableStateOf(customArgs) }
 
     if (showUninstallDialog) {
         AlertDialog(
@@ -46,16 +46,13 @@ fun SettingsScreen(
             title = { Text("Uninstall Distribution") },
             text = {
                 Text(
-                    "This will permanently delete the installed rootfs (${installedSizeMb} MB). Are you sure?",
+                    "This will permanently delete the installed rootfs ($installedSizeMb MB). Are you sure?",
                     color = TextSecondary
                 )
             },
             confirmButton = {
                 TextButton(
-                    onClick = {
-                        showUninstallDialog = false
-                        onUninstall()
-                    },
+                    onClick = { showUninstallDialog = false; onUninstall() },
                     colors = ButtonDefaults.textButtonColors(contentColor = ErrorRed)
                 ) { Text("Yes, Uninstall") }
             },
@@ -74,7 +71,7 @@ fun SettingsScreen(
         TopAppBar(
             title = {
                 Text(
-                    text = "Settings",
+                    "Settings",
                     style = MaterialTheme.typography.titleLarge,
                     color = TextPrimary,
                     fontWeight = FontWeight.SemiBold
@@ -108,10 +105,21 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text(distribution.name, style = MaterialTheme.typography.titleMedium, color = TextPrimary)
-                            Text("v${distribution.version} • ${installedSizeMb} MB installed", style = MaterialTheme.typography.bodySmall, color = TextSecondary)
+                            Text(
+                                distribution.name,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = TextPrimary
+                            )
+                            Text(
+                                "v${distribution.version} · $installedSizeMb MB installed",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = TextSecondary
+                            )
                         }
-                        Text(distribution.iconEmoji, style = MaterialTheme.typography.headlineMedium)
+                        Text(
+                            distribution.iconEmoji,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
                     }
 
                     Spacer(Modifier.height(12.dp))
@@ -120,16 +128,24 @@ fun SettingsScreen(
                         onClick = { showUninstallDialog = true },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = ErrorRed),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, ErrorRed)
+                        border = BorderStroke(1.dp, ErrorRed)
                     ) {
-                        Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Icon(
+                            Icons.Default.Delete,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
                         Spacer(Modifier.width(8.dp))
                         Text("Uninstall Distribution")
                     }
                 }
             } else {
                 SettingsCard {
-                    Text("No distribution installed", style = MaterialTheme.typography.bodyMedium, color = TextSecondary)
+                    Text(
+                        "No distribution installed",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextSecondary
+                    )
                 }
             }
 
@@ -137,7 +153,11 @@ fun SettingsScreen(
             SectionHeader("VNC")
 
             SettingsCard {
-                Text("VNC Port", style = MaterialTheme.typography.labelLarge, color = TextSecondary)
+                Text(
+                    "VNC Port",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = TextSecondary
+                )
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(
                     value = portInput,
@@ -145,13 +165,17 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = textFieldColors(),
+                    colors = settingsTextFieldColors(),
                     shape = RoundedCornerShape(10.dp)
                 )
 
                 Spacer(Modifier.height(16.dp))
 
-                Text("VNC Display Number", style = MaterialTheme.typography.labelLarge, color = TextSecondary)
+                Text(
+                    "VNC Display Number",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = TextSecondary
+                )
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(
                     value = displayInput,
@@ -159,7 +183,7 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = textFieldColors(),
+                    colors = settingsTextFieldColors(),
                     shape = RoundedCornerShape(10.dp)
                 )
 
@@ -173,19 +197,28 @@ fun SettingsScreen(
                         )
                     },
                     modifier = Modifier.align(Alignment.End),
-                    colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary, contentColor = BackgroundDark)
-                ) {
-                    Text("Save")
-                }
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GreenPrimary,
+                        contentColor   = BackgroundDark
+                    )
+                ) { Text("Save") }
             }
 
             Spacer(Modifier.height(8.dp))
             SectionHeader("Advanced")
 
             SettingsCard {
-                Text("Custom PRoot Arguments", style = MaterialTheme.typography.labelLarge, color = TextSecondary)
+                Text(
+                    "Custom PRoot Arguments",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = TextSecondary
+                )
                 Spacer(Modifier.height(4.dp))
-                Text("Additional flags passed to proot (one per line)", style = MaterialTheme.typography.bodySmall, color = TextDisabled)
+                Text(
+                    "Additional flags passed to proot on session start",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextDisabled
+                )
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(
                     value = argsInput,
@@ -193,15 +226,20 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(100.dp),
-                    colors = textFieldColors(),
+                    colors = settingsTextFieldColors(),
                     shape = RoundedCornerShape(10.dp),
-                    textStyle = LocalTextStyle.current.copy(fontFamily = FontFamily.Monospace)
+                    textStyle = MaterialTheme.typography.bodyMedium.copy(
+                        fontFamily = FontFamily.Monospace
+                    )
                 )
                 Spacer(Modifier.height(12.dp))
                 Button(
                     onClick = { onSaveCustomArgs(argsInput) },
                     modifier = Modifier.align(Alignment.End),
-                    colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary, contentColor = BackgroundDark)
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GreenPrimary,
+                        contentColor   = BackgroundDark
+                    )
                 ) { Text("Save") }
             }
 
@@ -213,6 +251,7 @@ fun SettingsScreen(
                 InfoRow("Version", BuildConfig.VERSION_NAME)
                 InfoRow("Package", BuildConfig.APPLICATION_ID)
                 InfoRow("Build Type", BuildConfig.BUILD_TYPE)
+                InfoRow("Min SDK", "Android 8.0 (API 26)")
             }
 
             Spacer(Modifier.height(32.dp))
@@ -256,12 +295,12 @@ private fun InfoRow(label: String, value: String) {
 }
 
 @Composable
-private fun textFieldColors() = OutlinedTextFieldDefaults.colors(
-    focusedBorderColor   = GreenPrimary,
-    unfocusedBorderColor = CardBorder,
-    cursorColor          = GreenPrimary,
-    focusedTextColor     = TextPrimary,
-    unfocusedTextColor   = TextPrimary,
+private fun settingsTextFieldColors() = OutlinedTextFieldDefaults.colors(
+    focusedBorderColor      = GreenPrimary,
+    unfocusedBorderColor    = CardBorder,
+    cursorColor             = GreenPrimary,
+    focusedTextColor        = TextPrimary,
+    unfocusedTextColor      = TextPrimary,
     focusedContainerColor   = SurfaceBright,
     unfocusedContainerColor = SurfaceBright
 )
