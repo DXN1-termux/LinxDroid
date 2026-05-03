@@ -1,37 +1,48 @@
-name: Android CI
+# This workflow is intentionally disabled for automatic triggers.
+# All CI is handled by build.yml which uses gradle/actions/setup-gradle
+# for proper caching and a full debug + release pipeline.
+#
+# This file is kept to preserve git history. Do not add push/PR triggers here.
+
+name: Android CI (Manual)
 
 on:
-  push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual run'
+        required: false
+        default: 'Manual trigger'
 
 jobs:
   build:
+    name: Manual Debug Build
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
+          distribution: temurin
 
-      - name: Grant execute permission for gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: wrapper
+
+      - name: Make gradlew executable
         run: chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: Run Unit Tests
-        run: ./gradlew test --no-daemon
-
-      - name: Upload Debug APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: linxdroid-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: linxdroid-debug-manual
+          path: app/build/outputs/apk/debug/*.apk
           retention-days: 7
