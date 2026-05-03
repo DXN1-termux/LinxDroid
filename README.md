@@ -1,3 +1,3 @@
-# Android APK Project
+# LinxDroid
 
 This is a new Android application project.
