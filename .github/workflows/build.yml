@@ -8,16 +8,19 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   # ─────────────────────────────────────────────
-  # 1.  Build + Test
+  # 1.  Build Debug + Unsigned Release APKs
   # ─────────────────────────────────────────────
   build:
-    name: Build & Test
+    name: Build APKs
     runs-on: ubuntu-latest
 
     steps:
@@ -33,19 +36,25 @@ jobs:
           distribution: temurin
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
-          cache-read-only: false
 
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      - name: Write local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+
       - name: Build debug APK
         run: ./gradlew assembleDebug -x test --no-daemon --stacktrace
+        env:
+          GRADLE_OPTS: "-Xmx4096m -XX:MaxMetaspaceSize=1024m"
 
       - name: Build release APK (unsigned)
         run: ./gradlew assembleRelease -x test --no-daemon --stacktrace
+        env:
+          GRADLE_OPTS: "-Xmx4096m -XX:MaxMetaspaceSize=1024m"
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
@@ -91,12 +100,15 @@ jobs:
           distribution: temurin
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
 
       - name: Make gradlew executable
         run: chmod +x gradlew
+
+      - name: Write local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
 
       - name: Decode keystore
         if: ${{ secrets.KEYSTORE_BASE64 != '' }}
@@ -109,6 +121,7 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS:         ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD:      ${{ secrets.KEY_PASSWORD }}
+          GRADLE_OPTS: "-Xmx4096m -XX:MaxMetaspaceSize=1024m"
         run: |
           ./gradlew assembleRelease -x test \
             -Pandroid.injected.signing.store.file=$PWD/app/release.jks \
