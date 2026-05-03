@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand -->
+    <color name="brand_green">#00C853</color>
+    <color name="brand_green_dark">#00952F</color>
+    <color name="brand_green_container">#002106</color>
+
+    <!-- Surface -->
+    <color name="background_dark">#0D0D0D</color>
+    <color name="surface_dark">#161616</color>
+    <color name="surface_variant">#1E1E1E</color>
+
+    <!-- Terminal -->
+    <color name="terminal_bg">#0A0A0A</color>
+    <color name="terminal_text">#D4E8D4</color>
+    <color name="terminal_prompt">#00C853</color>
+    <color name="terminal_error">#FF5252</color>
+    <color name="terminal_warning">#FFD740</color>
+
+    <!-- Text -->
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#99FFFFFF</color>
+    <color name="text_disabled">#61FFFFFF</color>
+
+    <!-- Status -->
+    <color name="status_running">#00C853</color>
+    <color name="status_stopped">#757575</color>
+    <color name="status_error">#FF5252</color>
+    <color name="status_installing">#FFD740</color>
+</resources>
