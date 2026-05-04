@@ -8,6 +8,7 @@ import com.linxdroid.app.model.Distribution
 import com.linxdroid.app.model.Distributions
 import com.linxdroid.app.model.LineType
 import com.linxdroid.app.model.TerminalLine
+import com.linxdroid.app.model.TerminalLine
 import com.linxdroid.app.terminal.TerminalSession
 import com.linxdroid.app.utils.ArchDetector
 import com.linxdroid.app.utils.DownloadManager
