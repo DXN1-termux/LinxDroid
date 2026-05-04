@@ -1,4 +1,5 @@
-# 🔥👀 COMING SOON 👀🔥
+# 👀 COMING SOON 👀
+< :) >
 # 🐧 LinxDroid
 
 **Run a complete Linux environment on Android — no root required.**
