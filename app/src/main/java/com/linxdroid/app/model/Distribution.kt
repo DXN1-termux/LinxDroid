@@ -61,11 +61,39 @@ object Distributions {
             description = "Stable, universal operating system powering countless servers.",
             iconEmoji = "🌀",
             downloadUrls = mapOf(
-                "aarch64" to "https://github.com/termux/proot-distro/releases/download/v4.7.0/debian-aarch64-pd-v4.7.0.tar.xz",
-                "x86_64"  to "https://github.com/termux/proot-distro/releases/download/v4.7.0/debian-x86_64-pd-v4.7.0.tar.xz"
+                "aarch64" to "https://github.com/termux/proot-distro/releases/download/v4.7.0/rootfs-debian-aarch64.tar.xz",
+                "x86_64"  to "https://github.com/termux/proot-distro/releases/download/v4.7.0/rootfs-debian-x86_64.tar.xz"
             ),
             defaultShell = "/bin/bash",
             estimatedSizeMb = 120
+        ),
+
+        Distribution(
+            id = "kali",
+            name = "Kali Linux",
+            version = KALI_VERSION,
+            description = "The industry-standard penetration testing and security auditing platform.",
+            iconEmoji = "🐉",
+            downloadUrls = mapOf(
+                "aarch64" to "https://github.com/termux/proot-distro/releases/download/v4.7.0/rootfs-kali-aarch64.tar.xz",
+                "x86_64"  to "https://github.com/termux/proot-distro/releases/download/v4.7.0/rootfs-kali-x86_64.tar.xz"
+            ),
+            defaultShell = "/bin/bash",
+            estimatedSizeMb = 180
+        ),
+
+        Distribution(
+            id = "arch",
+            name = "Arch Linux",
+            version = ARCH_VERSION,
+            description = "Rolling release Linux focused on simplicity and modernity.",
+            iconEmoji = "🦅",
+            downloadUrls = mapOf(
+                "aarch64" to "https://github.com/termux/proot-distro/releases/download/v4.7.0/rootfs-archlinux-aarch64.tar.xz",
+                "x86_64"  to "https://github.com/termux/proot-distro/releases/download/v4.7.0/rootfs-archlinux-x86_64.tar.xz"
+            ),
+            defaultShell = "/bin/bash",
+            estimatedSizeMb = 150
         )
     )
 
